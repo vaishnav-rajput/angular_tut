@@ -1,2 +1,44 @@
 <p>roles works!</p>
 <p>{{firstName}}</p>
+<div class="row">
+    <div class="col-3">
+        {{selectedState}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <input type="text" [value]="firstName" class="form-control"/>
+    </div>
+    <div class="col-3">
+        <input [type]="inputType" />
+    </div>
+    <div class="col-3">
+        <input type="text" [(ngModel)] = "firstName" /> 
+        <!-- ng model changes the value of the initial variable also can only be used in input element -->
+    </div>
+    <select [(ngModel)]="selectedState">
+        <option value="MH">
+            MH
+        </option>
+        <option value="MP">
+            MP
+        </option>
+        <option value="Goa">
+            Goa
+        </option>
+    </select>
+
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <button class="btn btn-success" (click)="showWelcomeAlert()">Show Alert</button>
+    </div>
+    <div class="col-3">
+        <button class="btn btn-success" (click)="showMessage('welcome react')">Show react message</button>
+
+    </div>
+</div>
+
+<!-- structural directive: ngIf, ngFor -->
+ <!-- attribute directive: ngClass, ngStyle -->
