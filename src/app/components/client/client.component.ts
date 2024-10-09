@@ -33,11 +33,29 @@ export class ClientComponent implements OnInit{
     this.clientService.addUpdate(this.clientObj).subscribe((res:APIResponseModel) => {
       if(res.result){
         alert("Client Created Success")
+        this.clientObj = new Client()
+        
       } else {
         alert(res.message)
       }
+      window.location.reload()
     }
 
     )
+  }
+
+  onDelete(id: number){
+    const isDelete = confirm("Are you sure want to delete")
+    if(isDelete){
+      this.clientService.deleteClientById(id).subscribe((res: APIResponseModel) => {
+        if(res.result){
+          alert("client Delete Success")
+          this.loadClient()
+        }else{
+          alert(res.message)
+        }
+      })
+    }
+    
   }
 }
