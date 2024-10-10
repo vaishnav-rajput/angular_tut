@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { APIResponseModel, Employee } from '../../model/interface/role';
 import { Client } from '../../model/class/Client';
@@ -15,7 +15,7 @@ export class ClientProjectComponent implements OnInit{
 
   projectForm: FormGroup = new FormGroup({
     clientProjectId: new FormControl(0),
-    projectName: new FormControl(""),
+    projectName: new FormControl("",[Validators.required, Validators.minLength(4)]),
     startDate: new FormControl(""),
     expectedEndDate: new FormControl(""),
     leadByEmpId: new FormControl(""),
@@ -34,7 +34,8 @@ export class ClientProjectComponent implements OnInit{
   employeeList: Employee[] = []
   clientList: Client[] = []
   ngOnInit(): void {
-    
+    this.getAllClient()
+    this.getAllEmployee()
   }
 
   getAllEmployee(){
@@ -43,5 +44,23 @@ export class ClientProjectComponent implements OnInit{
     })
   }
 
+  getAllClient(){
+    this.clientSrv.getAllClients().subscribe((res: APIResponseModel) => {
+      this.clientList = res.data
+    })
+  }
+
+  onSaveProject(){
+    const formValue = this.projectForm.value;
+    debugger;
+    this.clientSrv.addClientProjectUpdate(formValue).subscribe((res: APIResponseModel)=>{
+      if(res.result){
+        alert('project created')
+      }
+      else{
+        alert(res.message)
+      }
+    })
+  }
 
 }
