@@ -1,26 +1,32 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe, JsonPipe, UpperCasePipe } from '@angular/common';
 import { Component, inject, OnInit} from '@angular/core';
 import { Client } from '../../model/class/Client';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, UpperCasePipe, DatePipe, JsonPipe, AsyncPipe],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
 export class ClientComponent implements OnInit{
+  currenDate : Date = new Date()
 
   clientObj : Client = new Client()
   clientList: Client[] = [];
 
   clientService = inject(ClientService)
 
+  // async pipe helps subscribe to the observable
+  userList$ : Observable<any> = new Observable<any>
+
   ngOnInit(): void {
     this.loadClient()
+    this.userList$ = this.clientService.getAllUser()
   }
 
   loadClient(){
