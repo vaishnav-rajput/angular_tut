@@ -6,11 +6,12 @@ import { ClientService } from '../../services/client.service';
 import { APIResponseModel } from '../../model/interface/role';
 import { Observable } from 'rxjs';
 import { AlertComponent } from "../../reusableComponents/alert/alert.component";
+import { MyButtonComponent } from "../../reusableComponents/my-button/my-button.component";
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, UpperCasePipe, DatePipe, JsonPipe, AsyncPipe, AlertComponent],
+  imports: [CommonModule, FormsModule, UpperCasePipe, DatePipe, JsonPipe, AsyncPipe, AlertComponent, MyButtonComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
@@ -36,7 +37,7 @@ export class ClientComponent implements OnInit{
     })
   }
 
-  onSaveClient(){
+  onSaveClient(data: string){
     this.clientService.addUpdate(this.clientObj).subscribe((res:APIResponseModel) => {
       if(res.result){
         alert("Client Created Success")
